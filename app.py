@@ -4,15 +4,17 @@ import sys
 from copy import deepcopy
 
 
+
 # Global variables
 players = deepcopy(constants.PLAYERS) #  copied from 'constants.py'
 teams = deepcopy(constants.TEAMS) #  copied from 'constants.py'
-experienced = []
-inexperienced = []
-panthers = []
-bandits = []
-warriors = []
-
+experienced = [] # experienced players list
+inexperienced = [] # inexperienced players list
+panthers = [] # panthers team list
+bandits = [] # bandits team list
+warriors = [] # warriors team list
+ 
+ 
 
 #  Creates function to clean the data copied from 'constants.py'
 def clean_data():
@@ -25,8 +27,7 @@ def clean_data():
                   #  Add to experienced player's list
                   experienced.append(player)
             #  If the exprience value is 'NO', convert to False
-            elif player['experience'] == 'NO':
-                  player['experience'] = False
+            else:
                   #  Add to inexperienced player's list
                   inexperienced.append(player)
       #  For each player, convert the string value of 'height' to integer
@@ -37,6 +38,7 @@ def clean_data():
             int(player['height'])
             
 
+
 #  Creates function to assign players and 
 #  evenly balance experienced/inexperienced among teams            
 def create_teams(exp, inexp):
@@ -45,31 +47,28 @@ def create_teams(exp, inexp):
       warriors.append(exp[6:] + inexp[6:])
 
 
+
 #  Creates a function to display the user selected team
 def display_team(team):
-      #  Clean display
-      print("-" * 10)
-      print("Total Players: 6\n\n"
-            "Players on Team:")
-      #  For each player in user selected team, print each name
+      teamplayers = []
+      teamexp = []
+      teaminexp = []
       i = 0
       while i < len(team):
             for player in team[i]:
                   if player['experience'] == True:
-                        print(f"{player['name']} (Experienced)")
+                        teamplayers.append(player['name'])
+                        teamexp.append(player['name'])
                   else:
-                      print(f"{player['name']} (Inexperienced)")
+                        teamplayers.append(player['name'])
+                        teaminexp.append(player['name'])
             i += 1
-      print("\n")
-      #  For each player in user selected team, print each player's guardian(s)
-      print("Guardians: ")
+            teamguardians = []
       i = 0
       while i < len(team):
             for player in team[i]:
-                  print(f"{player['guardians']} ({player['name']})")
+                  teamguardians.append(player['guardians'])
             i += 1
-      print("\n")
-      #  Print the average height of the team in inches 
       #  (sum of team height in inches / num of players)
       sum = 0
       i = 0
@@ -78,8 +77,22 @@ def display_team(team):
                   sum += int(player['height'])
             i += 1
       average = int(sum / 6)
-      print(f"Average Team Height: {average} inches")
+            
+      #  Clean display
+      print("-" * 10)
+      print("Total Players: 6")
+      print(f"Experienced Players: {len(teamexp)}")
+      print(f"InExperienced Players: {len(teaminexp)}")
+      print(f"Average Team Height: {average} inches\n")  
+      
+      print("Players on Team:")
+      print(", ".join(teamplayers))
       print("\n")
+      
+      print("Guardians: ")
+      print(", ".join(teamguardians))
+      print("\n")
+
 
 
 #  Creates a function to prompt the user and display stats
@@ -127,22 +140,23 @@ def display_stats():
             else:
                   #  If user selects 1, display team[0] "Panthers" stats
                   if user_option2 == 1:
-                        print(f"Team: '{teams[0]}' Stats")
+                        print(f"Team: {teams[0]} Stats")
                         display_team(panthers)
                         display_stats()
                   #  If user selects 2, display team[1] "Bandits" stats
                   elif user_option2 == 2:
-                        print(f"Team: '{teams[1]}' Stats")
+                        print(f"Team: {teams[1]} Stats")
                         display_team(bandits)
                         display_stats()
                   #  If user selects 3, display team[2] "Warriors" stats
                   elif user_option2 == 3:
-                        print(f"Team: '{teams[2]}' Stats")
+                        print(f"Team: {teams[2]} Stats")
                         display_team(warriors)
                         display_stats()
 
 
-# Proper use of dunder __main__ ? :D
+
+# Proper use of dunder __main__ ? :)
 if __name__ == '__main__':
       #  Cleans the data copied from 'constants.py'
       clean_data()
