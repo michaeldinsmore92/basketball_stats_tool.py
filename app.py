@@ -4,16 +4,15 @@ import sys
 from copy import deepcopy
 
 
-
 # Global variables
-players = deepcopy(constants.PLAYERS) #  copied from 'constants.py'
-teams = deepcopy(constants.TEAMS) #  copied from 'constants.py'
-experienced = [] # experienced players list
-inexperienced = [] # inexperienced players list
-panthers = [] # panthers team list
-bandits = [] # bandits team list
-warriors = [] # warriors team list
- 
+players = deepcopy(constants.PLAYERS)
+teams = deepcopy(constants.TEAMS)
+experienced = []
+inexperienced = []
+heights = []
+panthers = []
+bandits = []
+warriors = [] 
  
 
 #  Creates function to clean the data copied from 'constants.py'
@@ -36,8 +35,7 @@ def clean_data():
             #  Slice the string value to only gather numbers
             player['height'] = player['height'][:2]
             #  Convert the string value to integer
-            int(player['height'])
-            
+            heights.append(int(player['height']))
 
 
 #  Creates function to assign players and 
@@ -46,7 +44,6 @@ def create_teams(exp, inexp):
       panthers.append(exp[:3] + inexp[:3])
       bandits.append(exp[3:6] + inexp[3:6])
       warriors.append(exp[6:] + inexp[6:])
-
 
 
 #  Creates a function to display the user selected team
@@ -64,7 +61,7 @@ def display_team(team):
                         teamplayers.append(player['name'])
                         teaminexp.append(player['name'])
             i += 1
-            teamguardians = []
+      teamguardians = []
       i = 0
       while i < len(team):
             for player in team[i]:
@@ -93,7 +90,6 @@ def display_team(team):
       print("Guardians: ")
       print(", ".join(teamguardians))
       print("\n")
-
 
 
 #  Creates a function to prompt the user and display stats
@@ -154,7 +150,6 @@ def display_stats():
                         print(f"Team: {teams[2]} Stats")
                         display_team(warriors)
                         display_stats()
-
 
 
 # Proper use of dunder __main__ ? :)
