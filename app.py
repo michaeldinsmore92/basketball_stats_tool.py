@@ -28,6 +28,7 @@ def clean_data():
                   experienced.append(player)
             #  If the exprience value is 'NO', convert to False
             else:
+                  player['experience'] = False
                   #  Add to inexperienced player's list
                   inexperienced.append(player)
       #  For each player, convert the string value of 'height' to integer
