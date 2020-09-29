@@ -10,6 +10,7 @@ teams = deepcopy(constants.TEAMS)
 experienced = []
 inexperienced = []
 heights = []
+guardians = []
 panthers = []
 bandits = []
 warriors = [] 
@@ -30,13 +31,22 @@ def clean_data():
                   player['experience'] = False
                   #  Add to inexperienced player's list
                   inexperienced.append(player)
+                  
       #  For each player, convert the string value of 'height' to integer
       for player in players:
             #  Slice the string value to only gather numbers
             player['height'] = player['height'][:2]
             #  Convert the string value to integer
-            heights.append(int(player['height']))
-
+            player['height'] = int(player['height'])
+            heights.append(player['height'])
+            
+      # Extend 'guardians' list of strings.     
+      for player in players:
+            # Remove the ' and ' between the names
+            player['guardians'] = player['guardians'].split(" and ") 
+            # Store each guardian in a list together for that player 
+            guardians.extend(player['guardians'])
+            
 
 #  Creates function to assign players and 
 #  evenly balance experienced/inexperienced among teams            
@@ -51,6 +61,7 @@ def display_team(team):
       teamplayers = []
       teamexp = []
       teaminexp = []
+      teamguardians = []
       i = 0
       while i < len(team):
             for player in team[i]:
@@ -61,12 +72,13 @@ def display_team(team):
                         teamplayers.append(player['name'])
                         teaminexp.append(player['name'])
             i += 1
-      teamguardians = []
+            
       i = 0
       while i < len(team):
             for player in team[i]:
-                  teamguardians.append(player['guardians'])
+                  teamguardians.extend(player['guardians'])
             i += 1
+            
       #  (sum of team height in inches / num of players)
       sum = 0
       i = 0
@@ -100,6 +112,7 @@ def display_stats():
             "Here are your choices:\n"
             "1) Display Team Stats\n"
             "2) Quit\n")
+      
       #  Prompt the user to enter an option (1/2)
       try:
             user_option = input("Enter an option: ")
