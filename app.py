@@ -119,51 +119,38 @@ def display_stats():
       #  Catch potential input error
       except EOFError as err:
             pass
-      #  Try to convert input into integer
-      try:
-            user_option = int(user_option)
-      #  Catch potential input error
-      except ValueError as err:
-            print("\nOops! Please enter either 1 or 2...\n")
-            display_stats()
-      except UnboundLocalError as err:
-            pass
       else:      
+            valid_options1 = ["1", "2"]
+            while user_option not in valid_options1:
+                  user_option = input("Please enter a 1 or 2 ")
             #  If the user elects to quit, exit program
-            if user_option == 2:
+            if user_option == "2":
                   print("Come back anytime! Goodbye!")
                   sys.exit()
             #  Otherwise, display team names
-            else:
+            while user_option != "2":
                   print(f"1) {teams[0]}\n"
                         f"2) {teams[1]}\n"
                         f"3) {teams[2]}\n")
-            #  Try to convert input into integer
-            try:
-                  user_option2 = int(input("Enter an option: "))
-            #  Catch potential input errors
-            except ValueError as err:
-                  print("\nOops! Please enter 1, 2, or 3...\n")
-                  display_stats()
-            except EOFError as err:
-                  pass
-            else:
+                  valid_options2 = ["1", "2", "3"]
+                  user_option2 = input("Enter an option: ")
+                  while user_option2 not in valid_options2:
+                        user_option2 = input("Please enter a 1, 2, or 3 ")
                   #  If user selects 1, display team[0] "Panthers" stats
-                  if user_option2 == 1:
+                  if user_option2 == "1":
                         print(f"Team: {teams[0]} Stats")
                         display_team(panthers)
                         display_stats()
                   #  If user selects 2, display team[1] "Bandits" stats
-                  elif user_option2 == 2:
+                  elif user_option2 == "2":
                         print(f"Team: {teams[1]} Stats")
                         display_team(bandits)
                         display_stats()
                   #  If user selects 3, display team[2] "Warriors" stats
-                  elif user_option2 == 3:
+                  elif user_option2 == "3":
                         print(f"Team: {teams[2]} Stats")
                         display_team(warriors)
                         display_stats()
-
 
 # Proper use of dunder __main__ ? :)
 if __name__ == '__main__':
